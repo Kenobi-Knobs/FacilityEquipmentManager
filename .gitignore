@@ -1,6 +1,6 @@
-/bin
-/obj
-/Migrations
-.vs
+*/bin
+*/obj
+*/Migrations
+*.vs
 
 *.user

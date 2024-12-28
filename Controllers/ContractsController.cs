@@ -1,6 +1,7 @@
 ﻿using FacilityEquipmentManager.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using FacilityEquipmentManager.Services;
+using FacilityEquipmentManager.Models.Entities;
 
 namespace FacilityEquipmentManager.Controllers
 {
@@ -16,10 +17,15 @@ namespace FacilityEquipmentManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateContract([FromBody] CreateContractDto contractDto)
+        public async Task<IActionResult> CreateContract([FromBody] CreateContractDto contractDto)
         {
-            // TODO: Implement logic for creating a new contract
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Contract newContract  = await _contractService.CreateContractAsync(contractDto);
+            return Ok(newContract);
         }
 
         [HttpGet]

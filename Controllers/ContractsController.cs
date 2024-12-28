@@ -1,5 +1,6 @@
 ﻿using FacilityEquipmentManager.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using FacilityEquipmentManager.Services;
 
 namespace FacilityEquipmentManager.Controllers
 {
@@ -7,6 +8,13 @@ namespace FacilityEquipmentManager.Controllers
     [Route("api/[controller]")]
     public class ContractsController : ControllerBase
     {
+        private readonly ContractService _contractService;
+
+        public ContractsController(ContractService contractService)
+        {
+            _contractService = contractService;
+        }
+
         [HttpPost]
         public IActionResult CreateContract([FromBody] CreateContractDto contractDto)
         {
@@ -15,10 +23,10 @@ namespace FacilityEquipmentManager.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetContracts()
+        public async Task<ActionResult<IEnumerable<ContractDto>>> GetAllContracts()
         {
-            // TODO: Implement logic for retrieving the list of contracts
-            return Ok();
+            IEnumerable<ContractDto> contracts = await _contractService.GetAllContractsAsync();
+            return Ok(contracts);
         }
     }
 }

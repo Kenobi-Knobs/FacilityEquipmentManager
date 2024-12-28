@@ -15,6 +15,7 @@ builder.Services.AddScoped<ContractService>();
 var app = builder.Build();
 
 app.UseMiddleware<ApiKeyMiddleware>();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

@@ -5,13 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FacilityEquipmentManager.Services
 {
-    public class ContractService
+    public class ContractService : IContractService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IContractQueue _contractQueue;
 
-        public ContractService(ApplicationDbContext context)
+        public ContractService(ApplicationDbContext context, IContractQueue contractQueue)
         {
             _context = context;
+            _contractQueue = contractQueue;
         }
 
         public async Task<IEnumerable<ContractDto>> GetAllContractsAsync()
@@ -56,6 +58,8 @@ namespace FacilityEquipmentManager.Services
             _context.Contracts.Add(contract);
             facility.StandardArea -= totalRequiredArea;
             await _context.SaveChangesAsync();
+
+            _contractQueue.Enqueue(contract);
 
             return contract;
         }

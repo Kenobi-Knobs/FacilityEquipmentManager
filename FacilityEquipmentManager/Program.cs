@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBConnection")));
 
 builder.Services.AddScoped<ContractService>();
+builder.Services.AddSingleton<IContractQueue, ContractQueue>();
+builder.Services.AddHostedService<ContractBackgroundProcessor>();
 
 var app = builder.Build();
 

@@ -9,9 +9,9 @@ namespace FacilityEquipmentManager.Controllers
     [Route("api/[controller]")]
     public class ContractsController : ControllerBase
     {
-        private readonly ContractService _contractService;
+        private readonly IContractService _contractService;
 
-        public ContractsController(ContractService contractService)
+        public ContractsController(IContractService contractService)
         {
             _contractService = contractService;
         }
